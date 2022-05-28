@@ -9,7 +9,7 @@ client.connect();
 
 app.get('/api/branch', (req, res)=>{
     let query = res.body;
-    client.query(`select * from bank_branches where branch ILike '${req.query.q}%' order by ifsc LIMIT ${req.query.limit} OFFSET ${req.query.offset};`, (err, result)=>{
+    client.query(`select ifsc,bank_id,branch,address,city,district,state from bank_branches where branch ILike '${req.query.q}%' order by ifsc LIMIT ${req.query.limit} OFFSET ${req.query.offset};`, (err, result)=>{
         if(!err){
             res.send({"branches":result.rows});
         }
@@ -24,7 +24,7 @@ app.get('/', (req, res)=>{
 
 app.get('/api/search', (req, res)=>{
     let query = res.body;
-    client.query(`select * from bank_branches where branch ILike '%${req.query.q}%' or city ILike '%${req.query.q}%' or ifsc ILike '%${req.query.q}%' or district ILike '%${req.query.q}%' or state ILike '%${req.query.q}%'  order by ifsc LIMIT ${req.query.limit} OFFSET ${req.query.offset};`, (err, result)=>{
+    client.query(`select ifsc,bank_id,branch,address,city,district,state from bank_branches where branch ILike '%${req.query.q}%' or city ILike '%${req.query.q}%' or ifsc ILike '%${req.query.q}%' or district ILike '%${req.query.q}%' or state ILike '%${req.query.q}%'  order by ifsc LIMIT ${req.query.limit} OFFSET ${req.query.offset};`, (err, result)=>{
         if(!err){
             res.send({"branches":result.rows});
         }
